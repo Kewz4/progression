@@ -2,6 +2,7 @@ package com.example.compat;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.world.entity.monster.Phantom;
@@ -10,6 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 
 @Mod("advanced_endgame_compat")
 public class ArmorCompatMod {
@@ -34,6 +37,17 @@ public class ArmorCompatMod {
             if (fullSet) {
                 event.setCanceled(true); // Prevent targeting
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemTooltip(ItemTooltipEvent event) {
+        if (event.getItemStack().is(NETHERITE_DIAMOND)) {
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(Component.translatable("tooltip.advanced_endgame_compat.set_bonus").withStyle(ChatFormatting.AQUA));
+            event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.phantom")).withStyle(ChatFormatting.BLUE));
+            event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.piglin")).withStyle(ChatFormatting.GOLD));
+            event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.enderman")).withStyle(ChatFormatting.DARK_PURPLE));
         }
     }
 }
