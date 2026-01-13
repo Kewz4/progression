@@ -21,7 +21,7 @@ Compatibility mod for Advanced Netherite, Deeper & Darker, and Resonant Synthesi
 
 [[dependencies.advanced_endgame_compat]]
     modId="advancednetherite"
-    mandatory=true
+    mandatory=false
     versionRange="[1.20.1,)"
     ordering="AFTER"
     side="BOTH"
