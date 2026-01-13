@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"key": {
+		"J": {
+			"item": "bossesunleashed:celestial_jelly"
+		},
+		"C": {
+			"item": "bossesunleashed:celestial_core"
+		},
+		"V": {
+			"item": "resonant_synthesis:otherside_chestplate"
+		}
+	},
+	"pattern": [
+		"JVJ",
+		"JCJ",
+		"JJJ"
+	],
+	"result": {
+		"count": 1,
+		"item": "bossesunleashed:celestial_jellyfish_chestplate"
+	},
+	"show_notification": true
+}

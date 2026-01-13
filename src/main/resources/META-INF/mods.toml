@@ -27,6 +27,13 @@ Compatibility mod for Advanced Netherite, Deeper & Darker, and Resonant Synthesi
     side="BOTH"
 
 [[dependencies.advanced_endgame_compat]]
+    modId="bossesunleashed"
+    mandatory=false
+    versionRange="[1.20.1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.advanced_endgame_compat]]
     modId="deeperdarker"
     mandatory=false
     versionRange="[1.20.1,)"
