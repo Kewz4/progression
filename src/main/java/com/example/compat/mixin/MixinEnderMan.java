@@ -18,10 +18,17 @@ public class MixinEnderMan {
 
     @Inject(method = "isLookingAtMe", at = @At("HEAD"), cancellable = true)
     private void isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> cir) {
-        // Vanilla Enderman checks for Pumpkin in HEAD slot.
-        // We extend this to check for our tagged helmet.
-        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (helmet.is(NETHERITE_DIAMOND)) {
+        Iterable<ItemStack> armor = player.getArmorSlots();
+        boolean fullSet = true;
+
+        for (ItemStack stack : armor) {
+            if (stack.isEmpty() || !stack.is(NETHERITE_DIAMOND)) {
+                fullSet = false;
+                break;
+            }
+        }
+
+        if (fullSet) {
             cir.setReturnValue(false);
         }
     }

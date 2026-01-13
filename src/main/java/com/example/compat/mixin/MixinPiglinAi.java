@@ -19,11 +19,20 @@ public class MixinPiglinAi {
     @Inject(method = "isWearingGold", at = @At("HEAD"), cancellable = true)
     private static void isWearingNetheriteDiamond(LivingEntity entity, CallbackInfoReturnable<Boolean> cir) {
         Iterable<ItemStack> armor = entity.getArmorSlots();
+        boolean fullSet = true;
+        int count = 0;
+
         for (ItemStack stack : armor) {
-            if (stack.is(NETHERITE_DIAMOND)) {
-                cir.setReturnValue(true);
-                return;
+            count++;
+            if (stack.isEmpty() || !stack.is(NETHERITE_DIAMOND)) {
+                fullSet = false;
+                break;
             }
+        }
+
+        // Ensure we actually checked slots (LivingEntity usually has 4 armor slots)
+        if (fullSet && count > 0) {
+            cir.setReturnValue(true);
         }
     }
 }
