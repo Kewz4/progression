@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "resonant_synthesis"
+		}
+	],
+	"key": {
+		"J": {
+			"item": "bossesunleashed:celestial_jelly"
+		},
+		"B": {
+			"item": "resonant_synthesis:otherside_boots"
+		}
+	},
+	"pattern": [
+		" B ",
+		"J J",
+		"J J"
+	],
+	"result": {
+		"count": 1,
+		"item": "bossesunleashed:celestial_jellyfish_boots"
+	},
+	"show_notification": true
+}

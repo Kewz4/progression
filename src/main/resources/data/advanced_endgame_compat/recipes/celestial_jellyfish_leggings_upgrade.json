@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "resonant_synthesis"
+		}
+	],
+	"key": {
+		"J": {
+			"item": "bossesunleashed:celestial_jelly"
+		},
+		"P": {
+			"item": "resonant_synthesis:otherside_leggings"
+		}
+	},
+	"pattern": [
+		"JJJ",
+		"JPJ",
+		"J J"
+	],
+	"result": {
+		"count": 1,
+		"item": "bossesunleashed:celestial_jellyfish_leggings"
+	},
+	"show_notification": true
+}

@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "deeperdarker:warden_helmet", "required": false },
+    { "id": "deeperdarker:warden_chestplate", "required": false },
+    { "id": "deeperdarker:warden_leggings", "required": false },
+    { "id": "deeperdarker:warden_boots", "required": false },
+    { "id": "resonant_synthesis:otherside_helmet", "required": false },
+    { "id": "resonant_synthesis:otherside_chestplate", "required": false },
+    { "id": "resonant_synthesis:otherside_leggings", "required": false },
+    { "id": "resonant_synthesis:otherside_boots", "required": false },
+    { "id": "bossesunleashed:celestial_jellyfish_mask", "required": false },
+    { "id": "bossesunleashed:celestial_jellyfish_chestplate", "required": false },
+    { "id": "bossesunleashed:celestial_jellyfish_leggings", "required": false },
+    { "id": "bossesunleashed:celestial_jellyfish_boots", "required": false }
+  ]
+}
