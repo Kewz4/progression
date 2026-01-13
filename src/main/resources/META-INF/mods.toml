@@ -1,0 +1,41 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All rights reserved"
+issueTrackerURL="https://github.com/example/example/issues"
+
+[[mods]]
+modId="advanced_endgame_compat"
+version="1.0.0"
+displayName="Advanced Endgame Compat"
+authors="Jules"
+description='''
+Compatibility mod for Advanced Netherite, Deeper & Darker, and Resonant Synthesis.
+'''
+
+[[dependencies.advanced_endgame_compat]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.advanced_endgame_compat]]
+    modId="advancednetherite"
+    mandatory=true
+    versionRange="[1.20.1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.advanced_endgame_compat]]
+    modId="deeperdarker"
+    mandatory=false
+    versionRange="[1.20.1,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.advanced_endgame_compat]]
+    modId="resonant_synthesis"
+    mandatory=false
+    versionRange="[1.20.1,)"
+    ordering="AFTER"
+    side="BOTH"
