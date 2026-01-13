@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "resonant_synthesis"
+		}
+	],
+	"key": {
+		"J": {
+			"item": "bossesunleashed:celestial_jelly"
+		},
+		"H": {
+			"item": "resonant_synthesis:otherside_helmet"
+		}
+	},
+	"pattern": [
+		"JJJ",
+		"JHJ",
+		"JJJ"
+	],
+	"result": {
+		"count": 1,
+		"item": "bossesunleashed:celestial_jellyfish_mask"
+	},
+	"show_notification": true
+}
