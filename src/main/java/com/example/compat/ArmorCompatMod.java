@@ -27,9 +27,11 @@ import java.util.UUID;
 public class ArmorCompatMod {
     private static final TagKey<net.minecraft.world.item.Item> NETHERITE_DIAMOND = TagKey.create(Registries.ITEM, new ResourceLocation("advancednetherite", "tiers/armor/netherite_diamond"));
     private static final TagKey<net.minecraft.world.item.Item> JELLYFISH_ARMOR = TagKey.create(Registries.ITEM, new ResourceLocation("advanced_endgame_compat", "jellyfish_armor"));
+    private static final TagKey<net.minecraft.world.item.Item> ENDGAME_TOOLS = TagKey.create(Registries.ITEM, new ResourceLocation("advanced_endgame_compat", "endgame_tools"));
 
     // UUIDs for attributes
     private static final UUID SPEED_MODIFIER = UUID.fromString("6f0c4332-e30b-4d4b-a2cc-29a320305844");
+    private static final UUID DAMAGE_MODIFIER = UUID.fromString("cb3f55d3-645c-4f38-a497-9c13a33db5cf");
 
     public ArmorCompatMod() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -63,8 +65,21 @@ public class ArmorCompatMod {
 
     @SubscribeEvent
     public void onItemAttribute(ItemAttributeModifierEvent event) {
+        // Jellyfish Leggings Speed
         if (event.getSlotType() == EquipmentSlot.LEGS && event.getItemStack().is(JELLYFISH_ARMOR)) {
             event.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_MODIFIER, "Jellyfish Leggings Speed", 0.20, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        }
+
+        // Tool Damage Bonus
+        if (event.getSlotType() == EquipmentSlot.MAINHAND) {
+            ResourceLocation id = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(event.getItemStack().getItem());
+            if (id != null && id.toString().equals("bossesunleashed:jellyfish_umbrella")) {
+                 // +2 over Warden Sword (+2 base), assuming Umbrella base ~ Sword base.
+                 // Ideally +4 total bonus.
+                 event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(DAMAGE_MODIFIER, "Umbrella Tool Bonus", 4.0, AttributeModifier.Operation.ADDITION));
+            } else if (event.getItemStack().is(ENDGAME_TOOLS)) {
+                 event.addModifier(Attributes.ATTACK_DAMAGE, new AttributeModifier(DAMAGE_MODIFIER, "Endgame Tool Bonus", 2.0, AttributeModifier.Operation.ADDITION));
+            }
         }
     }
 

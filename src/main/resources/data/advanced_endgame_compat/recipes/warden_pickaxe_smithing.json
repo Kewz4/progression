@@ -1,0 +1,21 @@
+{
+	"type": "minecraft:smithing_transform",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "deeperdarker"
+		}
+	],
+	"template": {
+		"item": "deeperdarker:warden_upgrade_smithing_template"
+	},
+	"base": {
+		"item": "advancednetherite:netherite_diamond_pickaxe"
+	},
+	"addition": {
+		"item": "deeperdarker:reinforced_echo_shard"
+	},
+	"result": {
+		"item": "deeperdarker:warden_pickaxe"
+	}
+}

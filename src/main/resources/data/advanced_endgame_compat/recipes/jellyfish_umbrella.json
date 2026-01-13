@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"conditions": [
+		{
+			"type": "forge:mod_loaded",
+			"modid": "bossesunleashed"
+		}
+	],
+	"key": {
+		"J": {
+			"item": "bossesunleashed:celestial_jelly"
+		},
+		"S": {
+			"item": "deeperdarker:warden_sword"
+		}
+	},
+	"pattern": [
+		"JJJ",
+		"JSJ",
+		" J "
+	],
+	"result": {
+		"count": 1,
+		"item": "bossesunleashed:jellyfish_umbrella"
+	},
+	"show_notification": true
+}
