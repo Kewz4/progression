@@ -1,22 +1,35 @@
 package com.example.compat;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.TagKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import java.util.UUID;
 
 @Mod("advanced_endgame_compat")
 public class ArmorCompatMod {
     private static final TagKey<net.minecraft.world.item.Item> NETHERITE_DIAMOND = TagKey.create(Registries.ITEM, new ResourceLocation("advancednetherite", "tiers/armor/netherite_diamond"));
+    private static final TagKey<net.minecraft.world.item.Item> JELLYFISH_ARMOR = TagKey.create(Registries.ITEM, new ResourceLocation("advanced_endgame_compat", "jellyfish_armor"));
+
+    // UUIDs for attributes
+    private static final UUID SPEED_MODIFIER = UUID.fromString("6f0c4332-e30b-4d4b-a2cc-29a320305844");
 
     public ArmorCompatMod() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -25,18 +38,33 @@ public class ArmorCompatMod {
     @SubscribeEvent
     public void onLivingChangeTarget(LivingChangeTargetEvent event) {
         if (event.getEntity() instanceof Phantom && event.getNewTarget() instanceof Player player) {
-            // Check for Full Set of the tag
-            boolean fullSet = true;
-            for (ItemStack stack : player.getArmorSlots()) {
-                if (stack.isEmpty() || !stack.is(NETHERITE_DIAMOND)) {
-                    fullSet = false;
-                    break;
-                }
+            if (isFullSet(player, NETHERITE_DIAMOND)) {
+                event.setCanceled(true);
             }
+        }
+    }
 
-            if (fullSet) {
-                event.setCanceled(true); // Prevent targeting
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START && isFullSet(event.player, JELLYFISH_ARMOR)) {
+            event.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, 0, false, false, true));
+            event.player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 20, 0, false, false, true));
+        }
+    }
+
+    @SubscribeEvent
+    public void onEffectApplicable(MobEffectEvent.Applicable event) {
+        if (event.getEntity() instanceof Player player && isFullSet(player, JELLYFISH_ARMOR)) {
+            if (event.getEffectInstance().getEffect() == MobEffects.BLINDNESS || event.getEffectInstance().getEffect() == MobEffects.DARKNESS) {
+                event.setResult(net.minecraftforge.eventbus.api.Event.Result.DENY);
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onItemAttribute(ItemAttributeModifierEvent event) {
+        if (event.getSlotType() == EquipmentSlot.LEGS && event.getItemStack().is(JELLYFISH_ARMOR)) {
+            event.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_MODIFIER, "Jellyfish Leggings Speed", 0.10, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
     }
 
@@ -49,5 +77,29 @@ public class ArmorCompatMod {
             event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.piglin")).withStyle(ChatFormatting.GOLD));
             event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.enderman")).withStyle(ChatFormatting.DARK_PURPLE));
         }
+
+        if (event.getItemStack().is(JELLYFISH_ARMOR)) {
+            event.getToolTip().add(Component.empty());
+            event.getToolTip().add(Component.translatable("tooltip.advanced_endgame_compat.jellyfish_bonus").withStyle(ChatFormatting.LIGHT_PURPLE));
+            event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.fire_res")).withStyle(ChatFormatting.RED));
+
+            if (event.getItemStack().getEquipmentSlot() == EquipmentSlot.LEGS) {
+                event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.speed")).withStyle(ChatFormatting.WHITE));
+            }
+            if (event.getItemStack().getEquipmentSlot() == EquipmentSlot.FEET) {
+                event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.dampening")).withStyle(ChatFormatting.GRAY));
+            }
+
+            event.getToolTip().add(Component.literal(" - ").append(Component.translatable("tooltip.advanced_endgame_compat.passive.full_set")).withStyle(ChatFormatting.GREEN));
+        }
+    }
+
+    private boolean isFullSet(Player player, TagKey<net.minecraft.world.item.Item> tag) {
+        for (ItemStack stack : player.getArmorSlots()) {
+            if (stack.isEmpty() || !stack.is(tag)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
