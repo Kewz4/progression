@@ -64,7 +64,7 @@ public class ArmorCompatMod {
     @SubscribeEvent
     public void onItemAttribute(ItemAttributeModifierEvent event) {
         if (event.getSlotType() == EquipmentSlot.LEGS && event.getItemStack().is(JELLYFISH_ARMOR)) {
-            event.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_MODIFIER, "Jellyfish Leggings Speed", 0.10, AttributeModifier.Operation.MULTIPLY_TOTAL));
+            event.addModifier(Attributes.MOVEMENT_SPEED, new AttributeModifier(SPEED_MODIFIER, "Jellyfish Leggings Speed", 0.20, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
     }
 
